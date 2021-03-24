@@ -1,5 +1,8 @@
-package com.example.xmlvalidator;
+package com.example.xmlvalidator.validation;
 
+import com.example.xmlvalidator.errors.ValidationFailedException;
+import com.example.xmlvalidator.storage.StorageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -15,18 +18,18 @@ import org.xml.sax.SAXException;
 @Service
 public class ValidateXMLSchemaService {
 
-    public static boolean validateXMLSchema(String xsdPath, String xmlPath){
+    @Autowired
+    StorageService storageService;
 
+    public void validateXMLSchema(String xsdPath, String filename){
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = factory.newSchema(new ClassPathResource(xsdPath).getFile());
             Validator validator = schema.newValidator();
-            validator.validate(new StreamSource(new ClassPathResource(xmlPath).getFile()));
+            validator.validate(new StreamSource(storageService.loadAsResource(filename).getFile()));
         } catch (IOException | SAXException e) {
-            System.out.println("Exception: " + e.getMessage());
-            return false;
+            throw new ValidationFailedException(e.getMessage());
+//            System.out.println("Exception: " + e.getMessage());
         }
-        return true;
     }
-
 }
