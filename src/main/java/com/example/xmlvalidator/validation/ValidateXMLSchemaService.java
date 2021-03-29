@@ -24,12 +24,11 @@ public class ValidateXMLSchemaService {
     public void validateXMLSchema(String xsdPath, String filename){
         try {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new ClassPathResource(xsdPath).getFile());
+            Schema schema = factory.newSchema(new StreamSource(new ClassPathResource(xsdPath).getInputStream()));
             Validator validator = schema.newValidator();
-            validator.validate(new StreamSource(storageService.loadAsResource(filename).getFile()));
+            validator.validate(new StreamSource(storageService.loadAsResource(filename).getInputStream()));
         } catch (IOException | SAXException e) {
             throw new ValidationFailedException(e.getMessage());
-//            System.out.println("Exception: " + e.getMessage());
         }
     }
 }
