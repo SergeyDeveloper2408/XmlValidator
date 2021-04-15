@@ -1,0 +1,15 @@
+<purchase-order>
+  <order-position>
+    <product-name>string</product-name>
+    <quantity>100</quantity>
+    <price>1000.00</price>
+    <!--0 to 2 repetitions:-->
+    <comment>string</comment>
+    <!--Optional:-->
+    <shipping-date>2008-09-29</shipping-date>
+  </order-position>
+  <!--Optional:-->
+  <order-date>2014-09-19</order-date>
+  <billing-address>string</billing-address>
+  <shipping-address>string</shipping-address>
+</purchase-order>

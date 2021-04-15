@@ -1,4 +1,4 @@
-package com.example.xmlvalidator.errors;
+package com.example.xmlvalidator.error.errors;
 
 public class StorageException extends RuntimeException {
 
